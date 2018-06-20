@@ -13,12 +13,9 @@ var FIREBALL_COLORS = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
 var setup = document.querySelector('.setup');
 var similarListElement = document.querySelector('.setup-similar-list');
 var similarWizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
-
 var setupOpen = document.querySelector('.setup-open');
 var setupClose = document.querySelector('.setup-close');
-
-// var setupUserName = document.querySelector('.setup-user-name');
-
+var setupUserName = document.querySelector('.setup-user-name');
 var coatColor = setup.querySelector('.wizard-coat');
 var eyesColor = setup.querySelector('.wizard-eyes');
 var fireballColor = setup.querySelector('.setup-fireball');
@@ -73,7 +70,6 @@ var renderWizard = function (wizard) {
 var openPopup = function () {
   setup.classList.remove('hidden');
   document.addEventListener('keydown', onPopupEscPress);
-  // stopPropagation на клавишу esc?
 };
 
 // Добаляет класс hidden объекту setup и убирает обработчик события keydown у объекта document.
@@ -84,8 +80,7 @@ var closePopup = function () {
 
 // Принимает событие event. Если нажата клавиша ESC, то запускает функцию closePopup.
 var onPopupEscPress = function (evt) {
-  // if (evt.keyCode === ESC_KEYCODE && !setupUserName.focused - поле поиска не в фокусе ) {
-  if (evt.keyCode === ESC_KEYCODE) {
+  if (evt.keyCode === ESC_KEYCODE && document.activeElement !== setupUserName) {
     closePopup();
   }
 };
@@ -103,8 +98,8 @@ var toAssignFireballColor = function (arr) {
   inputFireballColor.backgroundColor = fireballColor.style.backgroundColor;
 };
 
-// Обработчик событий клика на форме .Setup-Wizard-Form. Запускает функции из предложеных вариантов, в зависимости от того,
-// на каком элементе произошёл клик.
+// Обработчик событий клика на форме .Setup-Wizard-Form. Запускает функции из предложеных вариантов, в зависимости
+// от того, на каком элементе произошёл клик.
 var onSetupWizardFormClick = function (evt) {
   switch (evt.target) {
     case coatColor: toAssignColor(coatColor, COAT_COLORS, inputCoatColor);
